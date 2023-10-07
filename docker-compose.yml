@@ -1,4 +1,13 @@
 services:
+  spring-app:
+    container_name: spring-app
+    build:
+      context: . # O diretório onde está o seu Dockerfile
+      dockerfile: Dockerfile # Nome do seu Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db # Garanta que o contêiner do banco de dados esteja em execução antes de iniciar o aplicativo Spring Boot
 
   db:
     container_name: postgres
@@ -6,7 +15,7 @@ services:
     volumes:
       - cardapioDB:/var/lib/postgresql/data/pgdata
     env_file:
-      - env-dev
+      - .env
     ports:
       - "5432:5432"
 
